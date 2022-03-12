@@ -1,12 +1,15 @@
 package ru.sorokin.kontur.internship.chartographer.util;
 
-import org.opencv.core.*;
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
 import org.opencv.imgcodecs.Imgcodecs;
 import ru.sorokin.kontur.internship.chartographer.model.ImageCharta;
 import ru.sorokin.kontur.internship.chartographer.util.exception.CoordinateOutOfRangeException;
 
 import java.io.File;
 import java.util.UUID;
+
+import static ru.sorokin.kontur.internship.chartographer.util.Constant.*;
 
 public class Util {
     public static void loadOpenCVNativeLibrary() {
@@ -64,26 +67,26 @@ public class Util {
     }
 
     /**
-     * Проверяет превышение размера изображения к {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA()}.
-     * Если размер изображение больше {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA()},
+     * Проверяет превышение размера изображения к {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA}.
+     * Если размер изображение больше {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA},
      * вызывается метод {@link Util#splitImage(ImageCharta)}.
      */
     public static boolean checkSizeForSplit(int wight, int height) {
-        return (wight * height) >= Constant.MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA();
+        return (wight * height) >= MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA;
     }
 
     public static boolean checkSizeImage(int width, int height) {
-        return (width * height) > Constant.MAX_SIZE_IMAGE_CHARTA()
-                || width > Constant.MAX_WIDTH_IMAGE_CHARTA()
-                || height > Constant.MAX_HEIGHT_IMAGE_CHARTA()
+        return (width * height) > MAX_SIZE_IMAGE_CHARTA
+                || width > MAX_WIDTH_IMAGE_CHARTA
+                || height > MAX_HEIGHT_IMAGE_CHARTA
                 || width == 0
                 || height == 0;
     }
 
     public static boolean checkSizeFragment(int width, int height) {
-        return (width * height) > Constant.MAX_SIZE_IMAGE_FRAGMENT()
-                || width > Constant.MAX_SIDES_IMAGE_FRAGMENT()
-                || height > Constant.MAX_SIDES_IMAGE_FRAGMENT()
+        return (width * height) > MAX_SIZE_IMAGE_FRAGMENT
+                || width > MAX_SIDES_IMAGE_FRAGMENT
+                || height > MAX_SIDES_IMAGE_FRAGMENT
                 || width == 0
                 || height == 0;
     }

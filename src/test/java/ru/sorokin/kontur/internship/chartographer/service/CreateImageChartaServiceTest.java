@@ -3,12 +3,12 @@ package ru.sorokin.kontur.internship.chartographer.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.sorokin.kontur.internship.chartographer.util.Constant;
 import ru.sorokin.kontur.internship.chartographer.util.LoadOpenCv;
 import ru.sorokin.kontur.internship.chartographer.util.exception.SidesOutOfBoundsException;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static ru.sorokin.kontur.internship.chartographer.util.Constant.*;
 
 @SpringBootTest
 public class CreateImageChartaServiceTest {
@@ -35,8 +35,8 @@ public class CreateImageChartaServiceTest {
 
     @Test
     void createImageSidesOfBoundTest() {
-        int width = Constant.MAX_WIDTH_IMAGE_CHARTA() + 1;
-        int height = Constant.MAX_HEIGHT_IMAGE_CHARTA() + 1;
+        int width = MAX_WIDTH_IMAGE_CHARTA + 1;
+        int height = MAX_HEIGHT_IMAGE_CHARTA + 1;
         assertThrows(SidesOutOfBoundsException.class, () -> createImageChartaService.createImage(width, height));
     }
 

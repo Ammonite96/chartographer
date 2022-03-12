@@ -37,7 +37,7 @@ public class GetImageService {
 
     /**
      * Вызывается, при вставке и при получении фрагмента в методе {@link GetImageService#getImage(Long)},
-     * если размер изображения превышает {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA()}
+     * если размер изображения превышает {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA}
      */
     private void joinImageAfterSplit(ImageCharta image) {
         Mat imageFragment;
