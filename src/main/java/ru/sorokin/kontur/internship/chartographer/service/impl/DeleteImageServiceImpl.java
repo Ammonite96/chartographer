@@ -21,6 +21,7 @@ public class DeleteImageServiceImpl implements DeleteImageService {
         this.getImageService = getImageService;
     }
 
+    @Override
     public void deleteById(Long id) throws ImageChartaNotFoundException {
         ImageCharta image = getImageService.getImage(id);
         if (image.getAbsolutPath() != null) {

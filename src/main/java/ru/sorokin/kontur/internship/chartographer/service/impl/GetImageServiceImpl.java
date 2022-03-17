@@ -7,8 +7,10 @@ import ru.sorokin.kontur.internship.chartographer.model.ImageCharta;
 import ru.sorokin.kontur.internship.chartographer.repository.ImageChartaRepo;
 import ru.sorokin.kontur.internship.chartographer.service.GetImageService;
 import ru.sorokin.kontur.internship.chartographer.util.Constant;
-import ru.sorokin.kontur.internship.chartographer.util.Util;
 import ru.sorokin.kontur.internship.chartographer.util.exception.ImageChartaNotFoundException;
+
+import static ru.sorokin.kontur.internship.chartographer.util.Util.checkSizeForSplit;
+import static ru.sorokin.kontur.internship.chartographer.util.Util.subMat;
 
 @Service
 public class GetImageServiceImpl implements GetImageService {
@@ -18,6 +20,7 @@ public class GetImageServiceImpl implements GetImageService {
         this.imageChartaRepo = imageChartaRepo;
     }
 
+    @Override
     public ImageCharta getImage(Long id) throws ImageChartaNotFoundException {
         ImageCharta imageById = imageChartaRepo.getImageById(id);
         if (imageById.total() == 0) {
@@ -27,7 +30,7 @@ public class GetImageServiceImpl implements GetImageService {
                     imageById.getHeight(),
                     imageById.getWidth(),
                     imageById.getType());
-            if (Util.checkSizeForSplit(imageCharta.width(), imageCharta.height())) {
+            if (checkSizeForSplit(imageCharta.width(), imageCharta.height())) {
                 joinImageAfterSplit(imageCharta);
                 imageById.release();
                 return imageCharta;
@@ -37,14 +40,15 @@ public class GetImageServiceImpl implements GetImageService {
     }
 
     /**
-     * Вызывается, при вставке и при получении фрагмента в методе {@link GetImageServiceImpl#getImage(Long)},
+     * Вызывается, при вставке и при получении фрагмента в методе {@link GetImageService#getImage(Long)},
      * если размер изображения превышает {@link Constant#MAX_SIZE_FOR_SPLIT_IMAGE_CHARTA}
+     * Данный метод получает абсолютный путь к файлам изображения, и собирает эти изображения в одно целое.
      */
-    private void joinImageAfterSplit(ImageCharta image) {
+    private void joinImageAfterSplit(ImageCharta source) {
         Mat imageFragment;
-        for (int i = 0; i < image.getAbsolutPath().length; i++) {
-            imageFragment = Imgcodecs.imread(image.getAbsolutPath()[i]);
-            Mat matFr = Util.subMat(i, image.width(), image.height(), image);
+        for (int i = 0; i < source.getAbsolutPath().length; i++) {
+            imageFragment = Imgcodecs.imread(source.getAbsolutPath()[i]);
+            Mat matFr = subMat(i, source.width(), source.height(), source);
             imageFragment.copyTo(matFr);
             matFr.release();
             imageFragment.release();

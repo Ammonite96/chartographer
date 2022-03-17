@@ -15,6 +15,7 @@ public class ImageChartaRepoImpl implements ImageChartaRepo {
     private final List<ImageCharta> collectImageCharta = new ArrayList<>();
     private static Long ID_IMAGE = 0L;
 
+    @Override
     public void save(ImageCharta image) {
         image.setId(++ID_IMAGE);
         image.setType(CvType.CV_8UC3);
@@ -23,6 +24,7 @@ public class ImageChartaRepoImpl implements ImageChartaRepo {
         collectImageCharta.add(image);
     }
 
+    @Override
     public ImageCharta getImageById(Long id) throws ImageChartaNotFoundException {
         return collectImageCharta.stream()
                 .filter(image -> Objects.equals(image.getId(), id))
@@ -30,6 +32,7 @@ public class ImageChartaRepoImpl implements ImageChartaRepo {
                 .orElseThrow(() -> new ImageChartaNotFoundException("Charta with this id does not exist"));
     }
 
+    @Override
     public void deleteById(Long id) {
         collectImageCharta.removeIf(imageCharta -> {
             imageCharta.release();
