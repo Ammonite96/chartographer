@@ -26,12 +26,11 @@ public class Util {
         int width = fullImage.width();
         int height = fullImage.height();
         int countSplitImage = 4;
-        Mat mat;
         if (fullImage.getAbsolutPath() == null) {
             generateFileName(fullImage, countSplitImage);
         }
         for (int i = 0; i < countSplitImage; i++) {
-            mat = subMat(i, width, height, fullImage);
+            var mat = subMat(i, width, height, fullImage);
             Imgcodecs.imwrite(fullImage.getAbsolutPath()[i], mat);
             mat.release();
         }
@@ -45,9 +44,9 @@ public class Util {
      * @param countSplitImage кол.во частей на которое надо разделить исходное изображение
      */
     private static void generateFileName(ImageCharta image, int countSplitImage) {
-        String pathDir = PathDir.getPathDir();
-        String uuidFile = UUID.randomUUID().toString();
-        String[] result = new String[countSplitImage];
+        var pathDir = PathDir.getPathDir();
+        var uuidFile = UUID.randomUUID().toString();
+        var result = new String[countSplitImage];
         for (int i = 0; i < countSplitImage; i++) {
             result[i] = String.format("%s%s%d_%d_%s.bmp", pathDir, File.separator, image.getId(), i, uuidFile);
         }

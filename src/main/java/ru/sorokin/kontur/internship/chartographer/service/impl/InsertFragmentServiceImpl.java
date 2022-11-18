@@ -126,7 +126,7 @@ public class InsertFragmentServiceImpl implements InsertFragmentService {
         if (sourceArea.total() > fragment.total()
                 || sourceArea.width() > fragment.width()
                 || sourceArea.height() > fragment.height()) {
-            fragmentCut = cutFragmentOutside(x, y, source, fragment, sourceArea);
+            fragmentCut = cutFragmentOutside(fragment, sourceArea);
         } else {
             fragmentCut = fragment.submat(0, sourceArea.rows(), 0, sourceArea.cols());
         }
@@ -139,15 +139,12 @@ public class InsertFragmentServiceImpl implements InsertFragmentService {
      * Обрезает фрагмент по ширине или высоте в зависимости от того какая сторона фрагмента ближе к
      * границам исходного изображения и пересекает их
      *
-     * @param x Координата Х
-     * @param y Координата У
-     * @param source Исходное изображение (папирус)
      * @param fragment Распознанный фрагмент
      * @param sourceArea Область вставки фрагмента,
      *                   определяется в {@link InsertFragmentServiceImpl#cutFragment(int, int, Range, Range, ImageCharta, ImageCharta)}
      * @return Объект фрагмента в виде матрицы Mat библиотеки OpenCv.
      */
-    private Mat cutFragmentOutside(int x, int y, ImageCharta source, ImageCharta fragment, Mat sourceArea) {
+    private Mat cutFragmentOutside(ImageCharta fragment, Mat sourceArea) {
         Mat fragmentArea = new Mat();
         if (sourceArea.width() > fragment.width() && sourceArea.height() < fragment.height()) {
             fragmentArea = fragment.submat(
